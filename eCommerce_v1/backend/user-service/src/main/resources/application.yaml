@@ -1,0 +1,154 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  profiles:
+    active: dev
+
+  config:
+    import: "optional:configserver:"
+
+  cloud:
+    config:
+      fail-fast: false
+
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: ${MAIL_USER}
+    password: ${MAIL_PASS}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      # password: ${REDIS_PASSWORD:}
+
+  security:
+    require-email-verified: false
+    auto-verify-on-register: true
+
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: openid, profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+          facebook:
+            client-id: ${FACEBOOK_CLIENT_ID}
+            client-secret: ${FACEBOOK_CLIENT_SECRET}
+            scope: public_profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          facebook:
+            authorization-uri: https://www.facebook.com/v17.0/dialog/oauth
+            token-uri: https://graph.facebook.com/v17.0/oauth/access_token
+            user-info-uri: https://graph.facebook.com/me?fields=id,name,email,picture
+            user-name-attribute: id
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    root: INFO
+    com.ecomm.user: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{cid}] %logger{36} - %msg%n"
+
+ecomm:
+  jwt:
+    access-secret: ${JWT_ACCESS_SECRET:change-me-512-bits}
+    refresh-secret: ${JWT_REFRESH_SECRET:change-me-512-bits}
+    access-minutes: 15
+    refresh-days: 7
+
+# -------------- DEV PROFILE (Postgres) --------------
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/ecommerce_userdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Keep Eureka active in dev (it will try to register if your server is running)
+# Uncomment below if you want to suppress registration locally:
+# eureka:
+#   client:
+#     register-with-eureka: false
+#     fetch-registry: false
+
+# -------------- TEST PROFILE (H2 in-memory) --------------
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: jdbc:h2:mem:users;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  cloud:
+    discovery:
+      enabled: false
+    config:
+      enabled: false
+
+eureka:
+  client:
+    enabled: false
+
+# Disable RBAC seeding during tests
+app:
+  seed:
+    rbac: false

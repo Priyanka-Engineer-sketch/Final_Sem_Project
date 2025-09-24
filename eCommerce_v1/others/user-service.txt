@@ -1,0 +1,66 @@
+user-service/
+ ├── src/main/java/com/ecomm/user
+ │    ├── UserServiceApplication.java          # Main Spring Boot application
+ │    │
+ │    ├── config/                              # Configurations
+ │    │    ├── SecurityConfig.java             # Spring Security + JWT + OAuth2
+ │    │    ├── SwaggerConfig.java              # OpenAPI/Swagger setup
+ │    │    └── ActuatorConfig.java             # Actuator customizations
+ │    │
+ │    ├── controller/                          # REST APIs
+ │    │    ├── AuthController.java             # Login, Register, OAuth2 callback
+ │    │    └── UserController.java             # Profile & Address endpoints
+ │    │
+ │    ├── dto/                                 # Data Transfer Objects
+ │    │    ├── request/
+ │    │    │    ├── RegisterRequest.java
+ │    │    │    ├── LoginRequest.java
+ │    │    │    ├── ProfileUpdateRequest.java
+ │    │    │    └── AddressRequest.java
+ │    │    └── response/
+ │    │         ├── AuthResponse.java
+ │    │         ├── UserProfileResponse.java
+ │    │         └── AddressResponse.java
+ │    │
+ │    ├── entity/                              # JPA Entities
+ │    │    ├── User.java
+ │    │    ├── UserProfile.java
+ │    │    ├── Address.java
+ │    │    ├── Role.java
+ │    │    └── OAuthToken.java
+ │    │
+ │    ├── repository/                          # Spring Data Repositories
+ │    │    ├── UserRepository.java
+ │    │    ├── RoleRepository.java
+ │    │    ├── UserProfileRepository.java
+ │    │    ├── AddressRepository.java
+ │    │    └── OAuthTokenRepository.java
+ │    │
+ │    ├── security/                            # Security layer
+ │    │    ├── JwtAuthFilter.java              # JWT filter
+ │    │    ├── JwtService.java                 # Issue/validate JWT
+ │    │    └── CustomUserDetailsService.java   # Loads User for Security
+ │    │
+ │    ├── service/                             # Business logic
+ │    │    ├── AuthService.java
+ │    │    ├── UserService.java
+ │    │    └── impl/
+ │    │         ├── AuthServiceImpl.java
+ │    │         └── UserServiceImpl.java
+ │    │
+ │    └── exception/                           # Error handling
+ │         ├── GlobalExceptionHandler.java     # @ControllerAdvice
+ │         ├── ResourceNotFoundException.java
+ │         └── UserAlreadyExistsException.java
+ │
+ ├── src/main/resources/
+ │    ├── application.yml                      # Config (dev/prod via Spring Cloud Config)
+ │    └── db/migration/
+ │         └── V1__init_user_service.sql       # Flyway migration (schema)
+ │
+ ├── pom.xml                                   # Dependencies
+ ├── Dockerfile                                # Containerization
+ └── k8s/
+      ├── deployment.yaml                      # K8s Deployment
+      ├── service.yaml                         # K8s Service
+      └── configmap.yaml                       # Env Configs
