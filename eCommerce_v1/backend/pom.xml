@@ -40,16 +40,16 @@
 
   <modules>
     <module>user-service</module>
-    <module>catalog-service</module>
-    <module>order-service</module>
-    <module>inventory-service</module>
-    <module>notification-service</module>
-    <module>offers-loyalty-service</module>
-    <module>analytics-service</module>
-    <module>gateway</module>
-    <module>discovery</module>
-    <module>config-server</module>
-    <module>admin-server</module>
+<!--    <module>catalog-service</module>-->
+<!--    <module>order-service</module>-->
+<!--    <module>inventory-service</module>-->
+<!--    <module>notification-service</module>-->
+<!--    <module>offers-loyalty-service</module>-->
+<!--    <module>analytics-service</module>-->
+<!--    <module>gateway</module>-->
+<!--    <module>discovery</module>-->
+<!--    <module>config-server</module>-->
+<!--    <module>admin-server</module>-->
   </modules>
 
   <build>
