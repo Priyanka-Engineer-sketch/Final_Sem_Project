@@ -45,7 +45,9 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/actuator/health",
-            "/actuator/info"
+            "/actuator/info",
+
+            "/api/auth/**"
     };
 
     @Bean
@@ -62,13 +64,19 @@ public class SecurityConfig {
                         .requestMatchers(PUBLIC).permitAll()
                         .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 
-                        .requestMatchers("/api/users/me","/api/users/me/**").authenticated() // <-- specific BEFORE generic
+                        // user self endpoints
+                        .requestMatchers("/api/users/me", "/api/users/me/**").authenticated()
+
+                        // admin zones
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
+
+                        // everything else
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(rateLimitFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

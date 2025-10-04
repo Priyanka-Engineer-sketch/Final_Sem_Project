@@ -110,6 +110,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
 
 # Keep Eureka active in dev (it will try to register if your server is running)
 # Uncomment below if you want to suppress registration locally:

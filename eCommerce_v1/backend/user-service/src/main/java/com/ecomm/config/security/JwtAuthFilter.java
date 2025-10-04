@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -29,43 +31,59 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest req,
+                                    HttpServletResponse res,
+                                    FilterChain chain)
             throws ServletException, IOException {
 
         String header = req.getHeader(HttpHeaders.AUTHORIZATION);
+
+        // ---- No token? Let it pass to next filters (like public endpoints)
         if (header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(req, response);
+            chain.doFilter(req, res);
             return;
         }
 
         String token = header.substring(7);
+
+        // ---- Validate JWT signature/expiry
         if (!jwtService.validate(token)) {
-            filterChain.doFilter(req, response);
+            log.debug("Invalid JWT: {}", token);
+            SecurityContextHolder.clearContext();
+            chain.doFilter(req, res);
             return;
         }
 
         String email = jwtService.extractUsername(token);
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = userRepository.findByEmailIgnoreCase(email).orElse(null);
-            if (user != null) {
-                Integer ver = jwtService.extractTokenVersion(token);
-                if (ver != null && !ver.equals(user.getTokenVersion())) {
-                    filterChain.doFilter(req, response);
-                    return;
+            userRepository.findByEmailIgnoreCase(email).ifPresent(user -> {
+                try {
+                    Integer version = jwtService.extractTokenVersion(token);
+                    if (version != null && !version.equals(user.getTokenVersion())) {
+                        log.debug("Token version mismatch for {}", email);
+                        return;
+                    }
+
+                    Collection<GrantedAuthority> authorities = user.getRoles().stream()
+                            .map(Role::getName)
+                            .map(name -> name.startsWith("ROLE_") ? name : "ROLE_" + name)
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toSet());
+
+                    UsernamePasswordAuthenticationToken auth =
+                            new UsernamePasswordAuthenticationToken(email, null, authorities);
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+
+                    log.debug("Authenticated user: {} with roles {}", email, authorities);
+
+                } catch (Exception ex) {
+                    log.error("Error during JWT authentication for {}: {}", email, ex.getMessage());
+                    SecurityContextHolder.clearContext();
                 }
-
-                // Authorities — either from claims or DB
-                Collection<GrantedAuthority> auths = user.getRoles().stream()
-                        .map(Role::getName)
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toSet());
-
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(email, null, auths);
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
+            });
         }
-        filterChain.doFilter(req, response);
+
+        chain.doFilter(req, res);
     }
 }
