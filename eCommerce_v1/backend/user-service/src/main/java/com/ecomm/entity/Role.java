@@ -33,6 +33,15 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions = new HashSet<>();
 
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public void addPermission(Permission permission) {
         this.permissions.add(permission);
         permission.getRoles().add(this);
