@@ -63,8 +63,21 @@ spring:
 
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    # unique per instance; survives restarts thanks to random.value fallback
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+    metadata-map:
+      version: 1.0.0
+      zone: local
 
 management:
   endpoints:
@@ -84,9 +97,16 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{cid}] %logger{36} - %msg%n"
 
+# JWT config (keep only ONE block after you align with your code)
+app:
+  jwt:
+    secret: ${JWT_ACCESS_SECRET:change-me-512-bits}          # if your JwtService reads app.jwt.secret
+    access-exp-seconds: 900
+    refresh-exp-seconds: 604800
+
 ecomm:
   jwt:
-    access-secret: ${JWT_ACCESS_SECRET:change-me-512-bits}
+    access-secret: ${JWT_ACCESS_SECRET:change-me-512-bits}   # old keys you used
     refresh-secret: ${JWT_REFRESH_SECRET:change-me-512-bits}
     access-minutes: 15
     refresh-days: 7
@@ -113,8 +133,7 @@ spring:
         format_sql: true
     show-sql: true
 
-# Keep Eureka active in dev (it will try to register if your server is running)
-# Uncomment below if you want to suppress registration locally:
+# If you want to prevent registration during dev, uncomment:
 # eureka:
 #   client:
 #     register-with-eureka: false
@@ -146,9 +165,12 @@ spring:
     config:
       enabled: false
 
+# In tests we don't need Eureka; just don't register/fetch.
+# (Leaving eureka.client.enabled unspecified keeps auto-config harmless.)
 eureka:
   client:
-    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
 
 # Disable RBAC seeding during tests
 app:

@@ -46,9 +46,9 @@
 <!--    <module>notification-service</module>-->
 <!--    <module>offers-loyalty-service</module>-->
 <!--    <module>analytics-service</module>-->
-<!--    <module>gateway</module>-->
-<!--    <module>discovery</module>-->
-<!--    <module>config-server</module>-->
+    <module>api-gateway</module>
+    <module>ecom-discovery-server</module>
+    <module>config-server</module>
 <!--    <module>admin-server</module>-->
   </modules>
 
