@@ -1,0 +1,78 @@
+# =========================
+# DEFAULT: Git-backed Config Server
+# =========================
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_GIT_URI:https://github.com/your-org/your-config-repo}
+          default-label: ${CONFIG_GIT_BRANCH:main}
+          search-paths: ${CONFIG_GIT_PATHS:}
+          # For private repos (choose ONE method)
+          username: ${CONFIG_GIT_USERNAME:}
+          password: ${CONFIG_GIT_PASSWORD:}
+          # or SSH:
+          # private-key: ${CONFIG_GIT_SSH_KEY:}
+          clone-on-start: true
+
+  # Optional: protect the Config Server with Basic Auth
+  security:
+    user:
+      name: ${CONFIG_USER:config}
+      password: ${CONFIG_PASS:configpass}
+
+# Optional symmetric encryption key for {cipher} values in the repo
+encrypt:
+  key: ${CONFIG_ENCRYPT_KEY:}
+
+# Logging for the Config Server itself
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+# Eureka (optional)
+eureka:
+  client:
+    register-with-eureka: ${EUREKA_REGISTER:false}
+    fetch-registry: ${EUREKA_FETCH:false}
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+---
+# =========================
+# NATIVE PROFILE: Local folder backend
+# Activate with: --spring.profiles.active=native
+# =========================
+spring:
+  config:
+    activate:
+      on-profile: native
+
+  cloud:
+    config:
+      server:
+        native:
+          # Point to your local repo folder (absolute or relative)
+          search-locations: ${CONFIG_NATIVE_DIR:./config-repo}
+
+# Keep same port and security when using native (inherits unless overridden)
+server:
+  port: 8888
+
+# (Optional) You can override anything here for native profile if needed

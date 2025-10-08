@@ -1,0 +1,73 @@
+Question,Answer,Topic,Difficulty,Service
+Why both app-level and DB-level checks for email uniqueness?,App-level 'existsByEmail' gives fast feedback; DB unique index guarantees correctness under race conditions.,User-Service,Intermediate,User-Service
+Which password hashing to use and why?,BCrypt/Argon2: salts + work factor slow brute-force; widely vetted.,Security,Basic,Auth/User
+What should UserDTO exclude?,"Sensitive fields like passwordHash; include id, email, username, active.",DTO Design,Basic,User-Service
+How do you publish 'user.created' safely?,Use an outbox table/collection and a relay to Kafka; ensures no dual-write gaps.,Events,Advanced,User-Service
+What minimal claims go into JWT?,"sub, jti, roles, ver, iat, exp. Avoid PII.",Auth,Basic,Auth-Service
+How does logout work in a stateless system?,Blacklist JWT jti in Redis with TTL until exp; filter denies blacklisted tokens.,Auth,Intermediate,Auth-Service
+How to rotate signing keys without downtime?,Publish new kid; accept old+new in verifier during rotation window; gradually reissue tokens.,Auth,Advanced,Auth-Service
+Protect refresh endpoint from replay?,"Bind refresh token to client (fingerprint), rotate on use, store family in DB/Redis, detect reuse.",Auth,Advanced,Auth-Service
+How do you implement keyword search with filters in Mongo?,"Regex on name/description with 'i', combine with category/price criteria; always paginate and sort.",Search,Intermediate,Product-Service
+Cache strategy for product search pages?,"Cache-aside in Redis with composite key hash(q, category, page, size, sort); short TTL; invalidate on writes.",Caching,Intermediate,Product-Service
+How to prevent cache staleness?,Tag keys by product/category; delete related keys on update; or versioned keys.,Caching,Advanced,Product-Service
+Blend AI recommendations with search results?,"Fetch topN from Recommender; interleave with search results with a weight (e.g., 0.6 AI).",Recommendations,Intermediate,Product-Service
+Why Saga instead of 2PC for orders?,Microservices avoid distributed locks; Saga coordinates with events; compensations handle failures.,Architecture,Intermediate,Order-Service
+Ensure idempotency of CreateOrder under retries?,Require Idempotency-Key; store key→order mapping; return same response on retry.,Reliability,Intermediate,Order-Service
+How to deduplicate event processing?,Store processed eventId in a table/cache; skip if seen.,Reliability,Basic,Order-Service
+What if payment succeeds but event is lost?,Outbox + guaranteed delivery; periodic reconciliation; payment service exposes idempotent confirm endpoint.,Consistency,Advanced,Order-Service
+How is rate limiting configured in Spring Cloud Gateway?,RequestRateLimiter with Redis; key resolver per IP/user/API key.,Gateway,Intermediate,Gateway
+How to forward identity downstream?,Forward JWT; upstream services validate; optionally add X-User-ID headers after verification.,Gateway,Basic,Gateway
+CORS best practices?,Allow only needed origins/methods; cache preflight; avoid wildcard in prod.,Security,Basic,Gateway
+How are configs managed across envs?,Spring Cloud Config backed by Git; profiles (dev/test/prod); optional Vault for secrets.,Config,Basic,Config-Server
+What if Eureka is down?,Clients can use last known registry cache; configure timeouts/retries; fallbacks via LB.,Resilience,Intermediate,Eureka
+Cold-start for new users?,"Use popularity, trending in their declared categories, or ask for a few preferences.",AI,Basic,Recommender
+Evaluate recommender quality?,"CTR, conversion rate, MAP/NDCG offline; A/B tests online.",AI,Intermediate,Recommender
+Key metrics to watch?,"RPS, p95 latency, error rate, queue lag, GC, CPU/mem.",Observability,Basic,All
+How to trace a request across services?,Propagate trace/span IDs; use OpenTelemetry; visualize in Jaeger/Tempo.,Observability,Intermediate,All
+Which tests for Kafka flows?,"Integration tests with testcontainers; produce events, assert consumer side-effects.",Testing,Intermediate,Order-Service
+Contract testing approach?,Use OpenAPI; verify provider adheres; use spring-cloud-contract or schemathesis.,Testing,Advanced,All
+How to enforce password policy?,Bean Validation on DTO + custom validator; reject weak passwords early.,Security,Basic,Auth/User
+How to design product images handling?,Store in object storage (S3/GCS); save URLs in DB; serve via CDN.,Product,Intermediate,Product-Service
+Paginate APIs consistently?,"Query params: page,size,sort; return total elements/pages; default sensible sizes.",API Design,Basic,All
+HTTP status codes for errors?,"400 validation, 401 unauthenticated, 403 unauthorized, 404 not found, 409 conflict, 422 semantic, 500 server.",API Design,Basic,All
+Circuit breaking on outbound calls?,"Resilience4j: timeouts, retries, CB; fallbacks to cached data.",Resilience,Intermediate,All
+Versioning APIs?,URI (/v1) or header; deprecate gradually; backward-compatible changes preferred.,API Design,Intermediate,All
+Why Redis besides blacklist?,"Caching product search, session hints, rate limiter backend, idempotency store.",Infra,Basic,All
+Secure secrets?,Use Vault/Secret Manager; never commit in Git; rotate regularly.,Security,Basic,DevOps
+How to run locally?,"Docker Compose with Mongo, Redis, Kafka; `.env` for creds; profiles for dev.",DevEx,Basic,All
+Schema evolution in Mongo?,Additive changes are easy; use migration scripts for backfills; version docs if needed.,Data,Intermediate,All
+Prevent over-fetching in search?,Projection DTOs; only necessary fields; proper indexes.,Performance,Intermediate,Product-Service
+What indexes for catalog?,"name(text/regex), category, price, updatedAt; compound where needed.",Data,Intermediate,Product-Service
+Ensure order price integrity?,Price snapshot at order time; avoid recalculating from product later.,Domain,Intermediate,Order-Service
+Retry strategy for event consumers?,Exponential backoff; DLQ/parking lot for poison messages.,Reliability,Intermediate,Order-Service
+How to test JWT filters?,MockMvc + add Authorization header; assert 401/200 flows; unit test JwtService.,Testing,Intermediate,Auth/Gateway
+What’s an outbox pattern?,Write business data and event record atomically; relay publishes to Kafka.,Architecture,Advanced,All
+Do you need transactions in Mongo?,Prefer single-document atomicity; use multi-doc transactions sparingly with proper configuration.,Data,Advanced,All
+Id generation strategy?,Mongo ObjectId or ULID; sortable IDs ease pagination and logs correlation.,Data,Basic,All
+Blue/green deployments?,Ship vNext alongside vCurrent; shift traffic; easy rollback.,DevOps,Intermediate,All
+Rate-limit login endpoint?,Bucket4j/Redis; stricter limits; add CAPTCHA after thresholds.,Security,Intermediate,Gateway/Auth
+XSS/CSRF protections?,"Encode outputs, validate inputs; CSRF less relevant for pure JWT APIs; consider SameSite, CORS.",Security,Intermediate,Gateway
+How to expose health?,Actuator /health liveness/readiness; include DB/Kafka checks.,Ops,Basic,All
+What to log per request?,"TraceId, spanId, userId, path, status, latency; avoid PII.",Observability,Basic,All
+Fallback when recommender is down?,Return popular/new products; degrade gracefully.,Resilience,Basic,Product/Recommender
+Prevent N+1 in aggregations?,Batch fetch via dedicated endpoints or join at read-model; cache.,Performance,Advanced,All
+How to secure internal endpoints?,"Network policies, mTLS, authz per role/scope; do not expose /internal externally.",Security,Advanced,All
+OpenAPI usage?,"Generate clients, contract tests; ensure docs in CI.",Documentation,Basic,All
+Testing strategy summary?,"Pyramid: many unit, fewer integration, minimal e2e; automate in CI.",Testing,Basic,All
+When to use Feign vs. RESTTemplate?,Feign for declarative clients with LB/resilience; RESTTemplate for low-level control.,Integration,Basic,All
+Why PWA frontend?,"Offline, push notifications, installable, better lighthouse scores.",Frontend,Basic,PWA
+How to compute TF‑IDF quickly?,Use batch jobs; store sparse vectors; precompute similarities.,AI,Advanced,Recommender
+Ranking guardrails?,Filter out out-of-stock; weight margin/bestseller; cap duplicate categories.,AI/Product,Advanced,Product/Recommender
+What’s eventual consistency example here?,Order status lags payment event by seconds; UI polls or subscribes to updates.,Architecture,Basic,Order-Service
+Backpressure handling?,Kafka consumer lag monitoring; scale consumers; pause/resume.,Ops,Intermediate,Order-Service
+JWT size concerns?,Keep claims minimal; avoid lists of permissions; use scopes/roles.,Security,Basic,Auth
+Can you share a code snippet to validate tokens?,"Yes—JwtService parses, verifies signature/exp, extracts jti and roles.",Auth,Basic,Auth
+How do you expose internal product fetch for Order svc?,Internal endpoint protected; Feign client with CB; cache short-lived.,Integration,Intermediate,Product/Order
+Sorting by multiple fields?,"Parse 'field,dir' list; validate whitelist; build Sort orders.",API Design,Intermediate,Product
+Safe pagination defaults?,size<=50 (or 100); cap max size; return total counts.,API Design,Basic,All
+Secure file uploads?,"Virus scan, type/size limits, presigned URLs; store outside app servers.",Security,Advanced,Product
+What is DLQ?,Dead Letter Queue: messages that failed processing after retries; inspected later.,Reliability,Basic,Order-Service
+Graceful shutdown?,Stop accepting traffic; drain; close consumers after committing offsets.,Ops,Intermediate,All
+What to put in error response?,"Code, message, timestamp, correlationId, details per field for validation errors.",API Design,Basic,All
+How to test cache invalidation?,Update product → assert cache keys removed → next read misses and refills.,Testing,Intermediate,Product
+Prevent PII exposure in logs?,Mask emails/phones; avoid full JWTs; scrub sensitive fields.,Security,Basic,All
