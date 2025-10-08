@@ -5,13 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db7d36d7-1195-4b9a-ad6f-42aac76ddf0e" name="Changes" comment="Fix for user-service">
+      <change afterPath="$PROJECT_DIR$/api-gateway/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/apigateway/ApiGatewayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/config/KeyResolvers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/filter/Bucket4jRateLimiterGatewayFilterFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/filter/CorrelationIdFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/filter/JwtAuthGatewayFilterFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/ecomm/web/FallbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/test/java/com/ecomm/apigateway/ApiGatewayApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config-server/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom-discovery-server/dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom-discovery-server/src/test/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/JwtAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/JwtAuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/config/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/user/BootstrapData.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ecomm/user/BootstrapData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +42,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -32,20 +52,31 @@
         <entry key="$PROJECT_DIR$/../.." value="main" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/api-gateway" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Krityangan"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Krityangan&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Priyanka-Engineer-sketch/Final_Sem_Project.git",
-    "accountId": "eb6897bf-fa43-4147-8614-78357a85c5e2"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Priyanka-Engineer-sketch/Final_Sem_Project.git&quot;,
+    &quot;accountId&quot;: &quot;eb6897bf-fa43-4147-8614-78357a85c5e2&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Priyanka-Engineer-sketch&quot;,
+    &quot;repository&quot;: &quot;Final_Sem_Project&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -64,13 +95,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.DISCOVERY.executor": "Run",
     "Application.UER_SERVICE.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "userstory/userservice",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
@@ -80,10 +112,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.0",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reactor",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "spring",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   },
@@ -96,19 +129,59 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Music\PRIYANKA\eCommerce_v1\backend\.idea" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
         <option value="SwaggerCodegen" />
       </set>
     </option>
   </component>
   <component name="RunManager" selected="Application.UER_SERVICE">
+    <configuration name="DISCOVERY" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.ecomm.ecomdiscoveryserver.EcomDiscoveryServerApplication" />
+      <module name="ecom-discovery-server" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UER_SERVICE" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.ecomm.userservice.UserServiceApplication" />
       <module name="user-service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="api-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecomm.apigateway.ApiGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="config-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecomm.configserver.ConfigServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EcomDiscoveryServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="ecom-discovery-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ecomm.ecomdiscoveryserver.EcomDiscoveryServerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -139,7 +212,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.UER_SERVICE" />
+      <item itemvalue="Application.DISCOVERY" />
       <item itemvalue="OpenAPI/Swagger Code Generator.SWAGGER-API" />
+      <item itemvalue="Spring Boot.ApiGatewayApplication" />
+      <item itemvalue="Spring Boot.ConfigServerApplication" />
+      <item itemvalue="Spring Boot.EcomDiscoveryServerApplication" />
       <item itemvalue="Spring Boot.UserServiceApplication" />
     </list>
   </component>
@@ -162,7 +239,9 @@
       <workItem from="1759574285166" duration="1953000" />
       <workItem from="1759576482595" duration="1047000" />
       <workItem from="1759577599330" duration="858000" />
-      <workItem from="1759578530260" duration="11420000" />
+      <workItem from="1759578530260" duration="17238000" />
+      <workItem from="1759676076867" duration="429000" />
+      <workItem from="1759676597840" duration="9006000" />
     </task>
     <task id="LOCAL-00001" summary="Fix for user-service">
       <option name="closed" value="true" />
@@ -172,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759593379385</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fix for user-service">
+      <option name="closed" value="true" />
+      <created>1759602930482</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759602930482</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

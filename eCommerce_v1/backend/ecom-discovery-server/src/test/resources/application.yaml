@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: discovery-server-test
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false
+server:
+  port: 0
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
