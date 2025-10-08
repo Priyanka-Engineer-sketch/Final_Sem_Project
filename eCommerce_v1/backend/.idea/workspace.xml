@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db7d36d7-1195-4b9a-ad6f-42aac76ddf0e" name="Changes" comment="Fix for config-server">
-      <change beforePath="$PROJECT_DIR$/DesignPattern/.idea/workspace.xml" beforeDir="false" />
-    </list>
+    <list default="true" id="db7d36d7-1195-4b9a-ad6f-42aac76ddf0e" name="Changes" comment="Fix for config-server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -217,7 +215,7 @@
       <workItem from="1759676076867" duration="429000" />
       <workItem from="1759676597840" duration="9151000" />
       <workItem from="1759913730820" duration="389000" />
-      <workItem from="1759918472785" duration="1949000" />
+      <workItem from="1759918472785" duration="2287000" />
     </task>
     <task id="LOCAL-00001" summary="Fix for user-service">
       <option name="closed" value="true" />
